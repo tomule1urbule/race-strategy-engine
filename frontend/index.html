@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Race Blueprint — pacing &amp; fueling plan from your GPX</title>
+  <meta name="description" content="Upload a race GPX and get terrain-aware pacing, heart-rate caps and a timed fueling plan.">
+  <meta name="theme-color" content="#14130f">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="masthead">
+    <div class="wrap masthead__row">
+      <div class="brand">
+        <img class="brand__mark" src="icon.svg" alt="" width="30" height="30">
+        <div>
+          <h1 class="brand__name">Race Blueprint</h1>
+          <p class="brand__tag">Pacing · HR caps · Fueling</p>
+        </div>
+      </div>
+      <span class="engine" id="engine" data-state="loading" role="status" aria-live="polite">
+        <span class="engine__dot"></span><span class="engine__text">Loading engine…</span>
+      </span>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <form id="form" novalidate>
+      <!-- 1. Course -->
+      <section class="card" aria-labelledby="h-course">
+        <h2 class="card__title" id="h-course"><span class="step">01</span>Course</h2>
+        <label class="drop" id="drop">
+          <input type="file" id="gpx" accept=".gpx,application/gpx+xml,application/xml,text/xml">
+          <span class="drop__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M3 18l5-7 4 5 3-4 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>
+          </span>
+          <span class="drop__text"><strong id="gpx-name">Choose a GPX file</strong><small id="gpx-hint">Export the course from Garmin, Strava or the race website</small></span>
+        </label>
+        <div class="samples">
+          <span>or try</span>
+          <button type="button" class="chip" data-sample="hilly_half_marathon.gpx" data-sport="run">Hilly half marathon</button>
+          <button type="button" class="chip" data-sample="rolling_gran_fondo.gpx" data-sport="bike">100 km gran fondo</button>
+        </div>
+      </section>
+
+      <!-- 2. Athlete -->
+      <section class="card" aria-labelledby="h-athlete">
+        <h2 class="card__title" id="h-athlete"><span class="step">02</span>Athlete</h2>
+        <div class="seg" role="radiogroup" aria-label="Sport">
+          <label><input type="radio" name="sport" value="run" checked><span>Run</span></label>
+          <label><input type="radio" name="sport" value="bike"><span>Bike</span></label>
+        </div>
+        <div class="grid">
+          <label class="field" data-sport="run">
+            <span>Threshold pace <em>min:ss /km</em></span>
+            <input name="threshold_pace" inputmode="numeric" placeholder="4:30" value="4:30" pattern="\d{1,2}:\d{2}">
+          </label>
+          <label class="field" data-sport="bike" hidden>
+            <span>FTP <em>watts</em></span>
+            <input name="threshold_power_watts" type="number" inputmode="numeric" min="50" max="600" placeholder="250" value="250">
+          </label>
+          <label class="field">
+            <span>Weight <em>kg</em></span>
+            <input name="weight_kg" type="number" inputmode="decimal" step="0.1" min="30" max="200" value="72">
+          </label>
+          <label class="field">
+            <span>Max HR <em>bpm</em></span>
+            <input name="max_hr" type="number" inputmode="numeric" min="120" max="230" value="190">
+          </label>
+          <label class="field">
+            <span>Threshold HR <em>optional</em></span>
+            <input name="threshold_hr" type="number" inputmode="numeric" min="100" max="220" placeholder="auto">
+          </label>
+          <label class="field">
+            <span>Carbs target <em>g / hour</em></span>
+            <input name="target_carbs_per_hour" type="number" inputmode="numeric" min="0" max="150" value="60">
+          </label>
+          <label class="field">
+            <span>Sweat rate <em>L / hour</em></span>
+            <input name="sweat_rate_l_hr" type="number" inputmode="decimal" step="0.05" min="0.1" max="3.5" value="0.8">
+          </label>
+        </div>
+      </section>
+
+      <!-- 3. Race day -->
+      <section class="card" aria-labelledby="h-race">
+        <h2 class="card__title" id="h-race"><span class="step">03</span>Race day</h2>
+        <div class="grid">
+          <label class="field field--wide">
+            <span>Start</span>
+            <input name="start_time" type="datetime-local" required>
+          </label>
+          <label class="field">
+            <span>Temp at start <em>°C</em></span>
+            <input name="temperature_c" type="number" inputmode="decimal" step="0.5" min="-20" max="50" value="16">
+          </label>
+          <label class="field">
+            <span>Temp at finish <em>optional</em></span>
+            <input name="temperature_end_c" type="number" inputmode="decimal" step="0.5" min="-20" max="50" placeholder="same">
+          </label>
+          <label class="field">
+            <span>Humidity <em>%</em></span>
+            <input name="humidity_pct" type="number" inputmode="numeric" min="0" max="100" value="60">
+          </label>
+          <label class="field">
+            <span>Wind <em>km/h</em></span>
+            <input name="wind_speed_kmh" type="number" inputmode="decimal" min="0" max="120" value="0">
+          </label>
+          <label class="field">
+            <span>Wind from</span>
+            <select name="wind_direction_deg">
+              <option value="">Unknown</option>
+              <option value="0">N</option><option value="45">NE</option><option value="90">E</option>
+              <option value="135">SE</option><option value="180">S</option><option value="225">SW</option>
+              <option value="270">W</option><option value="315">NW</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Goal time <em>h:mm:ss, optional</em></span>
+            <input name="target_time" inputmode="numeric" placeholder="predict for me" pattern="(\d{1,2}:)?\d{1,2}:\d{2}">
+          </label>
+        </div>
+
+        <details class="more">
+          <summary>Strategy &amp; fuel products</summary>
+          <div class="grid">
+            <label class="field">
+              <span>Pacing</span>
+              <select name="pacing">
+                <option value="even_effort">Even effort</option>
+                <option value="negative_split">Negative split</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Aid stations <em>km, comma-separated</em></span>
+              <input name="aid_stations" placeholder="5, 10, 15, 20">
+            </label>
+            <label class="field">
+              <span>Gel name</span>
+              <input name="gel_name" value="Isotonic Gel">
+            </label>
+            <label class="field">
+              <span>Carbs per gel <em>g</em></span>
+              <input name="gel_carbs_g" type="number" inputmode="numeric" min="5" max="100" value="22">
+            </label>
+            <label class="field">
+              <span>Drink name</span>
+              <input name="drink_name" value="Electrolytes">
+            </label>
+            <label class="field">
+              <span>Drink carbs <em>g / L</em></span>
+              <input name="drink_carbs_g_per_l" type="number" inputmode="numeric" min="0" max="150" value="0">
+            </label>
+          </div>
+        </details>
+      </section>
+
+      <div class="errors" id="errors" role="alert" hidden></div>
+
+      <div class="cta">
+        <button type="submit" class="btn" id="go" disabled>
+          <span class="btn__label">Build my race plan</span>
+        </button>
+      </div>
+    </form>
+
+    <!-- Results -->
+    <section id="results" class="results" hidden aria-live="polite">
+      <div class="hero">
+        <p class="hero__kicker" id="r-kicker"></p>
+        <p class="hero__time" id="r-time"></p>
+        <p class="hero__sub" id="r-sub"></p>
+        <dl class="stats" id="r-stats"></dl>
+      </div>
+
+      <div class="card card--flush">
+        <div class="profile-head">
+          <h3>Course profile</h3>
+          <ul class="legend">
+            <li><i class="t-flat"></i>Flat</li><li><i class="t-ascent"></i>Climb</li><li><i class="t-descent"></i>Descent</li><li><i class="t-fuel"></i>Fuel</li>
+          </ul>
+        </div>
+        <div id="r-profile" class="profile"></div>
+      </div>
+
+      <div class="warnings" id="r-warnings" hidden></div>
+
+      <div class="tabs" role="tablist">
+        <button role="tab" aria-selected="true" data-tab="pacing">Pacing</button>
+        <button role="tab" aria-selected="false" data-tab="fueling">Fueling</button>
+        <button role="tab" aria-selected="false" data-tab="splits">Splits</button>
+      </div>
+      <div class="panel" data-panel="pacing" id="r-pacing"></div>
+      <div class="panel" data-panel="fueling" id="r-fueling" hidden></div>
+      <div class="panel" data-panel="splits" id="r-splits" hidden></div>
+
+      <div class="actions">
+        <button type="button" class="btn btn--ghost" id="edit">Edit inputs</button>
+        <button type="button" class="btn btn--ghost" id="download">Download JSON</button>
+      </div>
+      <p class="fine">A planning aid, not medical advice. Rehearse your fueling in training.</p>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.29.3/full/pyodide.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

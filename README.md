@@ -17,6 +17,12 @@ GPX ──► GPXAnalyzer ──► [Segment…] ──► RaceEngine ◄── 
                                      RaceBlueprint (Pydantic v2 → JSON / FastAPI / CLI)
 ```
 
+## Web app
+
+**[tomule1urbule.github.io/race-strategy-engine](https://tomule1urbule.github.io/race-strategy-engine/)**
+
+Upload a GPX, enter your threshold and the forecast, and get the plan on your phone. The page runs the Python engine in the browser with Pyodide, so no server is needed. See [`frontend/README.md`](frontend/README.md).
+
 ## Quick start
 
 ```bash
@@ -61,10 +67,11 @@ backend/race_strategy/
   cli.py            `race-strategy` command
   synthetic.py      Ground-truth GPX generator (tests and samples)
   utils.py          Geodesy, apparent temperature, air density, formatting
+  web.py            JSON bridge called by the browser app
 tests/              pytest suite (parsing accuracy, segmentation, physiology, nutrition, API)
 data/               Sample courses, example inputs, JSON Schema, example blueprint
-frontend/           Reserved for the UI. See frontend/README.md for the API contract.
-scripts/            generate_samples.py, which regenerates data/
+frontend/           Mobile web app (Pyodide), deployed to GitHub Pages
+scripts/            generate_samples.py (regenerates data/), build_site.py (builds the web app)
 ```
 
 ## Methodology
@@ -100,7 +107,7 @@ All coefficients are module-level constants in `race_engine.py`, so you can tune
 > ⚠️ This is a planning aid, not medical advice. Rehearse any fueling strategy in training.
 
 ## Roadmap
-- [ ] React and Vite frontend (`frontend/`)
+- [x] Mobile web app (`frontend/`)
 - [ ] FIT course and workout export, plus a PDF wristband
 - [ ] Hourly weather from a forecast API (Open-Meteo)
 - [ ] Personal grade-cost calibration from Garmin history

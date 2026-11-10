@@ -1,0 +1,10 @@
+{
+  "name": "Race Blueprint",
+  "short_name": "Blueprint",
+  "description": "Terrain-aware pacing, HR caps and fueling plan from your race GPX.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f4f1ea",
+  "theme_color": "#14130f",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}
