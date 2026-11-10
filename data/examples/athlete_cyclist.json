@@ -1,0 +1,9 @@
+{
+  "sport": "bike",
+  "weight_kg": 75,
+  "threshold_power_watts": 280,
+  "max_hr": 185,
+  "threshold_hr": 165,
+  "target_carbs_per_hour": 80,
+  "sweat_rate_l_hr": 1.0
+}

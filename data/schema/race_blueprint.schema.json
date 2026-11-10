@@ -1,0 +1,776 @@
+{
+  "$defs": {
+    "AthleteProfile": {
+      "additionalProperties": false,
+      "description": "Physiological profile of the athlete.",
+      "properties": {
+        "sport": {
+          "$ref": "#/$defs/Sport",
+          "default": "run"
+        },
+        "weight_kg": {
+          "description": "Body mass in kg.",
+          "exclusiveMinimum": 30,
+          "maximum": 200,
+          "title": "Weight Kg",
+          "type": "number"
+        },
+        "threshold_pace_sec_km": {
+          "anyOf": [
+            {
+              "maximum": 600,
+              "minimum": 150,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Running threshold pace, s/km (270 = 4:30/km).",
+          "title": "Threshold Pace Sec Km"
+        },
+        "threshold_power_watts": {
+          "anyOf": [
+            {
+              "maximum": 600,
+              "minimum": 50,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Cycling FTP in watts.",
+          "title": "Threshold Power Watts"
+        },
+        "max_hr": {
+          "description": "Maximum heart rate, bpm.",
+          "maximum": 230,
+          "minimum": 120,
+          "title": "Max Hr",
+          "type": "integer"
+        },
+        "threshold_hr": {
+          "anyOf": [
+            {
+              "maximum": 220,
+              "minimum": 100,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Lactate-threshold HR (LTHR). Defaults to 90% of max_hr when omitted.",
+          "title": "Threshold Hr"
+        },
+        "target_carbs_per_hour": {
+          "default": 60,
+          "description": "Carbohydrate target, g/h (60 default, 90+ if gut-trained).",
+          "maximum": 150,
+          "minimum": 0,
+          "title": "Target Carbs Per Hour",
+          "type": "integer"
+        },
+        "sweat_rate_l_hr": {
+          "default": 0.8,
+          "description": "Baseline sweat rate at <=18 C, L/h.",
+          "exclusiveMinimum": 0,
+          "maximum": 3.5,
+          "title": "Sweat Rate L Hr",
+          "type": "number"
+        },
+        "sweat_sodium_mg_l": {
+          "default": 900,
+          "description": "Sweat sodium concentration, mg/L.",
+          "maximum": 2500,
+          "minimum": 200,
+          "title": "Sweat Sodium Mg L",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "weight_kg",
+        "max_hr"
+      ],
+      "title": "AthleteProfile",
+      "type": "object"
+    },
+    "BikeSetup": {
+      "additionalProperties": false,
+      "properties": {
+        "bike_mass_kg": {
+          "default": 8.5,
+          "exclusiveMinimum": 3,
+          "maximum": 40,
+          "title": "Bike Mass Kg",
+          "type": "number"
+        },
+        "cda_m2": {
+          "default": 0.32,
+          "description": "Drag area, m^2.",
+          "exclusiveMinimum": 0.15,
+          "maximum": 0.8,
+          "title": "Cda M2",
+          "type": "number"
+        },
+        "crr": {
+          "default": 0.004,
+          "description": "Rolling resistance coeff.",
+          "exclusiveMinimum": 0.001,
+          "maximum": 0.02,
+          "title": "Crr",
+          "type": "number"
+        },
+        "drivetrain_efficiency": {
+          "default": 0.975,
+          "exclusiveMinimum": 0.8,
+          "maximum": 1.0,
+          "title": "Drivetrain Efficiency",
+          "type": "number"
+        },
+        "max_descent_speed_kmh": {
+          "default": 70.0,
+          "exclusiveMinimum": 20,
+          "maximum": 120,
+          "title": "Max Descent Speed Kmh",
+          "type": "number"
+        }
+      },
+      "title": "BikeSetup",
+      "type": "object"
+    },
+    "CourseSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "total_distance_km": {
+          "title": "Total Distance Km",
+          "type": "number"
+        },
+        "elevation_gain_m": {
+          "title": "Elevation Gain M",
+          "type": "number"
+        },
+        "elevation_loss_m": {
+          "title": "Elevation Loss M",
+          "type": "number"
+        },
+        "min_elevation_m": {
+          "title": "Min Elevation M",
+          "type": "number"
+        },
+        "max_elevation_m": {
+          "title": "Max Elevation M",
+          "type": "number"
+        },
+        "segment_count": {
+          "title": "Segment Count",
+          "type": "integer"
+        },
+        "terrain_km": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "propertyNames": {
+            "$ref": "#/$defs/TerrainType"
+          },
+          "title": "Terrain Km",
+          "type": "object"
+        }
+      },
+      "required": [
+        "total_distance_km",
+        "elevation_gain_m",
+        "elevation_loss_m",
+        "min_elevation_m",
+        "max_elevation_m",
+        "segment_count",
+        "terrain_km"
+      ],
+      "title": "CourseSummary",
+      "type": "object"
+    },
+    "EnvironmentSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "apparent_temp_start_c": {
+          "title": "Apparent Temp Start C",
+          "type": "number"
+        },
+        "apparent_temp_end_c": {
+          "title": "Apparent Temp End C",
+          "type": "number"
+        },
+        "heat_performance_penalty_pct": {
+          "description": "Estimated slowdown (run) or power loss (bike) from heat.",
+          "title": "Heat Performance Penalty Pct",
+          "type": "number"
+        },
+        "sweat_rate_start_l_hr": {
+          "title": "Sweat Rate Start L Hr",
+          "type": "number"
+        },
+        "sweat_rate_end_l_hr": {
+          "title": "Sweat Rate End L Hr",
+          "type": "number"
+        },
+        "air_density_kg_m3": {
+          "title": "Air Density Kg M3",
+          "type": "number"
+        }
+      },
+      "required": [
+        "apparent_temp_start_c",
+        "apparent_temp_end_c",
+        "heat_performance_penalty_pct",
+        "sweat_rate_start_l_hr",
+        "sweat_rate_end_l_hr",
+        "air_density_kg_m3"
+      ],
+      "title": "EnvironmentSummary",
+      "type": "object"
+    },
+    "FuelingEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "elapsed_s": {
+          "title": "Elapsed S",
+          "type": "number"
+        },
+        "elapsed_label": {
+          "title": "Elapsed Label",
+          "type": "string"
+        },
+        "clock_time": {
+          "format": "date-time",
+          "title": "Clock Time",
+          "type": "string"
+        },
+        "distance_km": {
+          "title": "Distance Km",
+          "type": "number"
+        },
+        "terrain": {
+          "$ref": "#/$defs/TerrainType"
+        },
+        "gels": {
+          "minimum": 0,
+          "title": "Gels",
+          "type": "integer"
+        },
+        "carbs_g": {
+          "minimum": 0,
+          "title": "Carbs G",
+          "type": "number"
+        },
+        "fluid_ml": {
+          "minimum": 0,
+          "title": "Fluid Ml",
+          "type": "integer"
+        },
+        "sodium_mg": {
+          "minimum": 0,
+          "title": "Sodium Mg",
+          "type": "integer"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "elapsed_s",
+        "elapsed_label",
+        "clock_time",
+        "distance_km",
+        "terrain",
+        "gels",
+        "carbs_g",
+        "fluid_ml",
+        "sodium_mg",
+        "message"
+      ],
+      "title": "FuelingEvent",
+      "type": "object"
+    },
+    "FuelingProducts": {
+      "additionalProperties": false,
+      "properties": {
+        "gel_name": {
+          "default": "Isotonic Gel",
+          "title": "Gel Name",
+          "type": "string"
+        },
+        "gel_carbs_g": {
+          "default": 22.0,
+          "exclusiveMinimum": 0,
+          "maximum": 100,
+          "title": "Gel Carbs G",
+          "type": "number"
+        },
+        "gel_sodium_mg": {
+          "default": 0.0,
+          "maximum": 1000,
+          "minimum": 0,
+          "title": "Gel Sodium Mg",
+          "type": "number"
+        },
+        "drink_name": {
+          "default": "Electrolytes",
+          "title": "Drink Name",
+          "type": "string"
+        },
+        "drink_carbs_g_per_l": {
+          "default": 0.0,
+          "maximum": 150,
+          "minimum": 0,
+          "title": "Drink Carbs G Per L",
+          "type": "number"
+        },
+        "drink_sodium_mg_per_l": {
+          "default": 500.0,
+          "maximum": 2000,
+          "minimum": 0,
+          "title": "Drink Sodium Mg Per L",
+          "type": "number"
+        }
+      },
+      "title": "FuelingProducts",
+      "type": "object"
+    },
+    "NutritionSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "carbs_per_hour_target": {
+          "title": "Carbs Per Hour Target",
+          "type": "number"
+        },
+        "carbs_total_g": {
+          "title": "Carbs Total G",
+          "type": "number"
+        },
+        "gels_total": {
+          "title": "Gels Total",
+          "type": "integer"
+        },
+        "fluid_total_ml": {
+          "title": "Fluid Total Ml",
+          "type": "integer"
+        },
+        "fluid_avg_l_hr": {
+          "title": "Fluid Avg L Hr",
+          "type": "number"
+        },
+        "sweat_loss_total_l": {
+          "title": "Sweat Loss Total L",
+          "type": "number"
+        },
+        "sweat_rate_avg_l_hr": {
+          "title": "Sweat Rate Avg L Hr",
+          "type": "number"
+        },
+        "est_body_mass_loss_pct": {
+          "title": "Est Body Mass Loss Pct",
+          "type": "number"
+        },
+        "sodium_total_mg": {
+          "title": "Sodium Total Mg",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "carbs_per_hour_target",
+        "carbs_total_g",
+        "gels_total",
+        "fluid_total_ml",
+        "fluid_avg_l_hr",
+        "sweat_loss_total_l",
+        "sweat_rate_avg_l_hr",
+        "est_body_mass_loss_pct",
+        "sodium_total_mg"
+      ],
+      "title": "NutritionSummary",
+      "type": "object"
+    },
+    "RaceStrategy": {
+      "additionalProperties": false,
+      "properties": {
+        "target_finish_time_s": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Goal time; if omitted the engine predicts one.",
+          "title": "Target Finish Time S"
+        },
+        "pacing": {
+          "default": "even_effort",
+          "enum": [
+            "even_effort",
+            "negative_split"
+          ],
+          "title": "Pacing",
+          "type": "string"
+        },
+        "aid_stations_km": {
+          "description": "If given, fueling events are scheduled at these points.",
+          "items": {
+            "type": "number"
+          },
+          "title": "Aid Stations Km",
+          "type": "array"
+        },
+        "max_fluid_l_hr": {
+          "default": 1.0,
+          "exclusiveMinimum": 0.1,
+          "maximum": 1.5,
+          "title": "Max Fluid L Hr",
+          "type": "number"
+        },
+        "fueling": {
+          "$ref": "#/$defs/FuelingProducts"
+        },
+        "bike": {
+          "$ref": "#/$defs/BikeSetup"
+        }
+      },
+      "title": "RaceStrategy",
+      "type": "object"
+    },
+    "SegmentPlan": {
+      "additionalProperties": false,
+      "properties": {
+        "segment_index": {
+          "title": "Segment Index",
+          "type": "integer"
+        },
+        "terrain": {
+          "$ref": "#/$defs/TerrainType"
+        },
+        "start_km": {
+          "title": "Start Km",
+          "type": "number"
+        },
+        "end_km": {
+          "title": "End Km",
+          "type": "number"
+        },
+        "avg_grade_pct": {
+          "title": "Avg Grade Pct",
+          "type": "number"
+        },
+        "est_start_s": {
+          "title": "Est Start S",
+          "type": "number"
+        },
+        "est_duration_s": {
+          "title": "Est Duration S",
+          "type": "number"
+        },
+        "target_speed_kmh": {
+          "title": "Target Speed Kmh",
+          "type": "number"
+        },
+        "target_pace_sec_km": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Target Pace Sec Km"
+        },
+        "target_pace_label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Target Pace Label"
+        },
+        "target_power_watts": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Target Power Watts"
+        },
+        "effort_factor": {
+          "description": "Grade cost multiplier vs flat (GAP factor).",
+          "title": "Effort Factor",
+          "type": "number"
+        },
+        "wind_factor": {
+          "title": "Wind Factor",
+          "type": "number"
+        },
+        "hr_target_low": {
+          "title": "Hr Target Low",
+          "type": "integer"
+        },
+        "hr_target_high": {
+          "title": "Hr Target High",
+          "type": "integer"
+        },
+        "hr_cap": {
+          "title": "Hr Cap",
+          "type": "integer"
+        },
+        "guidance": {
+          "title": "Guidance",
+          "type": "string"
+        }
+      },
+      "required": [
+        "segment_index",
+        "terrain",
+        "start_km",
+        "end_km",
+        "avg_grade_pct",
+        "est_start_s",
+        "est_duration_s",
+        "target_speed_kmh",
+        "effort_factor",
+        "wind_factor",
+        "hr_target_low",
+        "hr_target_high",
+        "hr_cap",
+        "guidance"
+      ],
+      "title": "SegmentPlan",
+      "type": "object"
+    },
+    "Split": {
+      "additionalProperties": false,
+      "properties": {
+        "index": {
+          "title": "Index",
+          "type": "integer"
+        },
+        "end_km": {
+          "title": "End Km",
+          "type": "number"
+        },
+        "split_s": {
+          "title": "Split S",
+          "type": "number"
+        },
+        "cumulative_s": {
+          "title": "Cumulative S",
+          "type": "number"
+        },
+        "split_label": {
+          "title": "Split Label",
+          "type": "string"
+        },
+        "cumulative_label": {
+          "title": "Cumulative Label",
+          "type": "string"
+        }
+      },
+      "required": [
+        "index",
+        "end_km",
+        "split_s",
+        "cumulative_s",
+        "split_label",
+        "cumulative_label"
+      ],
+      "title": "Split",
+      "type": "object"
+    },
+    "Sport": {
+      "enum": [
+        "run",
+        "bike"
+      ],
+      "title": "Sport",
+      "type": "string"
+    },
+    "TerrainType": {
+      "enum": [
+        "Flat",
+        "Ascent",
+        "Descent"
+      ],
+      "title": "TerrainType",
+      "type": "string"
+    },
+    "WeatherConditions": {
+      "additionalProperties": false,
+      "properties": {
+        "temperature_c": {
+          "description": "Air temperature at start, C.",
+          "maximum": 50,
+          "minimum": -20,
+          "title": "Temperature C",
+          "type": "number"
+        },
+        "temperature_end_c": {
+          "anyOf": [
+            {
+              "maximum": 50,
+              "minimum": -20,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Forecast temperature at finish (linear drift).",
+          "title": "Temperature End C"
+        },
+        "humidity_pct": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Humidity Pct",
+          "type": "number"
+        },
+        "wind_speed_kmh": {
+          "default": 0.0,
+          "maximum": 120,
+          "minimum": 0,
+          "title": "Wind Speed Kmh",
+          "type": "number"
+        },
+        "wind_direction_deg": {
+          "anyOf": [
+            {
+              "maximum": 360,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Meteorological wind direction (where wind blows FROM). Enables head/tailwind.",
+          "title": "Wind Direction Deg"
+        },
+        "start_time": {
+          "format": "date-time",
+          "title": "Start Time",
+          "type": "string"
+        }
+      },
+      "required": [
+        "temperature_c",
+        "humidity_pct",
+        "start_time"
+      ],
+      "title": "WeatherConditions",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "generated_at": {
+      "format": "date-time",
+      "title": "Generated At",
+      "type": "string"
+    },
+    "athlete": {
+      "$ref": "#/$defs/AthleteProfile"
+    },
+    "weather": {
+      "$ref": "#/$defs/WeatherConditions"
+    },
+    "strategy": {
+      "$ref": "#/$defs/RaceStrategy"
+    },
+    "course": {
+      "$ref": "#/$defs/CourseSummary"
+    },
+    "environment": {
+      "$ref": "#/$defs/EnvironmentSummary"
+    },
+    "predicted_finish_s": {
+      "title": "Predicted Finish S",
+      "type": "number"
+    },
+    "predicted_finish_label": {
+      "title": "Predicted Finish Label",
+      "type": "string"
+    },
+    "sustainable_finish_s": {
+      "description": "Model's estimate of a sustainable finish in these conditions.",
+      "title": "Sustainable Finish S",
+      "type": "number"
+    },
+    "segments": {
+      "items": {
+        "$ref": "#/$defs/SegmentPlan"
+      },
+      "title": "Segments",
+      "type": "array"
+    },
+    "splits": {
+      "items": {
+        "$ref": "#/$defs/Split"
+      },
+      "title": "Splits",
+      "type": "array"
+    },
+    "fueling_events": {
+      "items": {
+        "$ref": "#/$defs/FuelingEvent"
+      },
+      "title": "Fueling Events",
+      "type": "array"
+    },
+    "nutrition": {
+      "$ref": "#/$defs/NutritionSummary"
+    },
+    "warnings": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    }
+  },
+  "required": [
+    "athlete",
+    "weather",
+    "strategy",
+    "course",
+    "environment",
+    "predicted_finish_s",
+    "predicted_finish_label",
+    "sustainable_finish_s",
+    "segments",
+    "splits",
+    "fueling_events",
+    "nutrition"
+  ],
+  "title": "RaceBlueprint",
+  "type": "object"
+}

@@ -1,0 +1,443 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-11-10T00:00:00Z",
+  "athlete": {
+    "sport": "run",
+    "weight_kg": 72.0,
+    "threshold_pace_sec_km": 270,
+    "threshold_power_watts": null,
+    "max_hr": 190,
+    "threshold_hr": 172,
+    "target_carbs_per_hour": 60,
+    "sweat_rate_l_hr": 0.8,
+    "sweat_sodium_mg_l": 900
+  },
+  "weather": {
+    "temperature_c": 21.0,
+    "temperature_end_c": 25.0,
+    "humidity_pct": 65.0,
+    "wind_speed_kmh": 12.0,
+    "wind_direction_deg": 270.0,
+    "start_time": "2026-11-15T08:30:00+02:00"
+  },
+  "strategy": {
+    "target_finish_time_s": 6000,
+    "pacing": "even_effort",
+    "aid_stations_km": [],
+    "max_fluid_l_hr": 1.0,
+    "fueling": {
+      "gel_name": "Isotonic Gel",
+      "gel_carbs_g": 22.0,
+      "gel_sodium_mg": 0.0,
+      "drink_name": "Electrolytes",
+      "drink_carbs_g_per_l": 0.0,
+      "drink_sodium_mg_per_l": 500.0
+    },
+    "bike": {
+      "bike_mass_kg": 8.5,
+      "cda_m2": 0.32,
+      "crr": 0.004,
+      "drivetrain_efficiency": 0.975,
+      "max_descent_speed_kmh": 70.0
+    }
+  },
+  "course": {
+    "total_distance_km": 21.098,
+    "elevation_gain_m": 160.9,
+    "elevation_loss_m": 150.0,
+    "min_elevation_m": 49.5,
+    "max_elevation_m": 177.8,
+    "segment_count": 7,
+    "terrain_km": {
+      "Flat": 13.367,
+      "Ascent": 3.94,
+      "Descent": 3.79
+    }
+  },
+  "environment": {
+    "apparent_temp_start_c": 20.0,
+    "apparent_temp_end_c": 25.4,
+    "heat_performance_penalty_pct": 1.29,
+    "sweat_rate_start_l_hr": 0.848,
+    "sweat_rate_end_l_hr": 0.979,
+    "air_density_kg_m3": 1.1873
+  },
+  "predicted_finish_s": 6000.0,
+  "predicted_finish_label": "1:40:00",
+  "sustainable_finish_s": 6110.5,
+  "segments": [
+    {
+      "segment_index": 0,
+      "terrain": "Flat",
+      "start_km": 0.0,
+      "end_km": 2.99,
+      "avg_grade_pct": 0.235,
+      "est_start_s": 0.0,
+      "est_duration_s": 832.8,
+      "target_speed_kmh": 12.92,
+      "target_pace_sec_km": 278.5,
+      "target_pace_label": "4:39/km",
+      "target_power_watts": null,
+      "effort_factor": 1.0128,
+      "wind_factor": 0.9917,
+      "hr_target_low": 164,
+      "hr_target_high": 171,
+      "hr_cap": 172,
+      "guidance": "Flat 2.99 km: settle at ~4:39/km; HR 164-171 bpm."
+    },
+    {
+      "segment_index": 1,
+      "terrain": "Ascent",
+      "start_km": 2.99,
+      "end_km": 4.48,
+      "avg_grade_pct": 3.418,
+      "est_start_s": 832.8,
+      "est_duration_s": 507.5,
+      "target_speed_kmh": 10.57,
+      "target_pace_sec_km": 340.6,
+      "target_pace_label": "5:41/km",
+      "target_power_watts": null,
+      "effort_factor": 1.1997,
+      "wind_factor": 0.994,
+      "hr_target_low": 158,
+      "hr_target_high": 163,
+      "hr_cap": 163,
+      "guidance": "Climb +3.4% for 1.49 km: go by effort, not speed (~5:41/km). Hard HR cap 163 bpm; if exceeded, ease off - shorten stride and hike pitches if needed to protect glycogen."
+    },
+    {
+      "segment_index": 2,
+      "terrain": "Descent",
+      "start_km": 4.48,
+      "end_km": 5.71,
+      "avg_grade_pct": -2.654,
+      "est_start_s": 1340.3,
+      "est_duration_s": 315.1,
+      "target_speed_kmh": 14.05,
+      "target_pace_sec_km": 256.2,
+      "target_pace_label": "4:16/km",
+      "target_power_watts": null,
+      "effort_factor": 0.9328,
+      "wind_factor": 0.9903,
+      "hr_target_low": 159,
+      "hr_target_high": 169,
+      "hr_cap": 172,
+      "guidance": "Descent -2.7% for 1.23 km: ~4:16/km, quick, light cadence, no braking. Let HR settle to 159-169 bpm."
+    },
+    {
+      "segment_index": 3,
+      "terrain": "Flat",
+      "start_km": 5.71,
+      "end_km": 9.71,
+      "avg_grade_pct": 0.027,
+      "est_start_s": 1655.4,
+      "est_duration_s": 1101.5,
+      "target_speed_kmh": 13.07,
+      "target_pace_sec_km": 275.4,
+      "target_pace_label": "4:35/km",
+      "target_power_watts": null,
+      "effort_factor": 1.0015,
+      "wind_factor": 0.9915,
+      "hr_target_low": 164,
+      "hr_target_high": 171,
+      "hr_cap": 172,
+      "guidance": "Flat 4.00 km: settle at ~4:35/km; HR 164-171 bpm."
+    },
+    {
+      "segment_index": 4,
+      "terrain": "Ascent",
+      "start_km": 9.71,
+      "end_km": 12.16,
+      "avg_grade_pct": 4.159,
+      "est_start_s": 2756.9,
+      "est_duration_s": 867.5,
+      "target_speed_kmh": 10.17,
+      "target_pace_sec_km": 354.1,
+      "target_pace_label": "5:54/km",
+      "target_power_watts": null,
+      "effort_factor": 1.2466,
+      "wind_factor": 0.9943,
+      "hr_target_low": 158,
+      "hr_target_high": 163,
+      "hr_cap": 163,
+      "guidance": "Climb +4.2% for 2.45 km: go by effort, not speed (~5:54/km). Hard HR cap 163 bpm; if exceeded, ease off - shorten stride and hike pitches if needed to protect glycogen."
+    },
+    {
+      "segment_index": 5,
+      "terrain": "Descent",
+      "start_km": 12.16,
+      "end_km": 14.72,
+      "avg_grade_pct": -3.818,
+      "est_start_s": 3624.4,
+      "est_duration_s": 636.9,
+      "target_speed_kmh": 14.47,
+      "target_pace_sec_km": 248.8,
+      "target_pace_label": "4:09/km",
+      "target_power_watts": null,
+      "effort_factor": 0.9063,
+      "wind_factor": 0.9898,
+      "hr_target_low": 159,
+      "hr_target_high": 169,
+      "hr_cap": 172,
+      "guidance": "Descent -3.8% for 2.56 km: ~4:09/km, quick, light cadence, no braking. Let HR settle to 159-169 bpm."
+    },
+    {
+      "segment_index": 6,
+      "terrain": "Flat",
+      "start_km": 14.72,
+      "end_km": 21.098,
+      "avg_grade_pct": -0.308,
+      "est_start_s": 4261.2,
+      "est_duration_s": 1738.8,
+      "target_speed_kmh": 13.2,
+      "target_pace_sec_km": 272.6,
+      "target_pace_label": "4:33/km",
+      "target_power_watts": null,
+      "effort_factor": 0.9917,
+      "wind_factor": 0.9913,
+      "hr_target_low": 164,
+      "hr_target_high": 171,
+      "hr_cap": 173,
+      "guidance": "Flat 6.38 km: settle at ~4:33/km; HR 164-171 bpm."
+    }
+  ],
+  "splits": [
+    {
+      "index": 1,
+      "end_km": 1.0,
+      "split_s": 278.5,
+      "cumulative_s": 278.5,
+      "split_label": "4:39",
+      "cumulative_label": "4:39"
+    },
+    {
+      "index": 2,
+      "end_km": 2.0,
+      "split_s": 278.5,
+      "cumulative_s": 557.1,
+      "split_label": "4:39",
+      "cumulative_label": "9:17"
+    },
+    {
+      "index": 3,
+      "end_km": 3.0,
+      "split_s": 279.2,
+      "cumulative_s": 836.2,
+      "split_label": "4:39",
+      "cumulative_label": "13:56"
+    },
+    {
+      "index": 4,
+      "end_km": 4.0,
+      "split_s": 340.6,
+      "cumulative_s": 1176.8,
+      "split_label": "5:41",
+      "cumulative_label": "19:37"
+    },
+    {
+      "index": 5,
+      "end_km": 5.0,
+      "split_s": 296.7,
+      "cumulative_s": 1473.5,
+      "split_label": "4:57",
+      "cumulative_label": "24:34"
+    },
+    {
+      "index": 6,
+      "end_km": 6.0,
+      "split_s": 261.7,
+      "cumulative_s": 1735.3,
+      "split_label": "4:22",
+      "cumulative_label": "28:55"
+    },
+    {
+      "index": 7,
+      "end_km": 7.0,
+      "split_s": 275.4,
+      "cumulative_s": 2010.6,
+      "split_label": "4:35",
+      "cumulative_label": "33:31"
+    },
+    {
+      "index": 8,
+      "end_km": 8.0,
+      "split_s": 275.4,
+      "cumulative_s": 2286.0,
+      "split_label": "4:35",
+      "cumulative_label": "38:06"
+    },
+    {
+      "index": 9,
+      "end_km": 9.0,
+      "split_s": 275.4,
+      "cumulative_s": 2561.4,
+      "split_label": "4:35",
+      "cumulative_label": "42:41"
+    },
+    {
+      "index": 10,
+      "end_km": 10.0,
+      "split_s": 298.2,
+      "cumulative_s": 2859.5,
+      "split_label": "4:58",
+      "cumulative_label": "47:40"
+    },
+    {
+      "index": 11,
+      "end_km": 11.0,
+      "split_s": 354.1,
+      "cumulative_s": 3213.6,
+      "split_label": "5:54",
+      "cumulative_label": "53:34"
+    },
+    {
+      "index": 12,
+      "end_km": 12.0,
+      "split_s": 354.1,
+      "cumulative_s": 3567.7,
+      "split_label": "5:54",
+      "cumulative_label": "59:28"
+    },
+    {
+      "index": 13,
+      "end_km": 13.0,
+      "split_s": 265.6,
+      "cumulative_s": 3833.3,
+      "split_label": "4:26",
+      "cumulative_label": "1:03:53"
+    },
+    {
+      "index": 14,
+      "end_km": 14.0,
+      "split_s": 248.8,
+      "cumulative_s": 4082.1,
+      "split_label": "4:09",
+      "cumulative_label": "1:08:02"
+    },
+    {
+      "index": 15,
+      "end_km": 15.0,
+      "split_s": 255.5,
+      "cumulative_s": 4337.6,
+      "split_label": "4:15",
+      "cumulative_label": "1:12:18"
+    },
+    {
+      "index": 16,
+      "end_km": 16.0,
+      "split_s": 272.6,
+      "cumulative_s": 4610.2,
+      "split_label": "4:33",
+      "cumulative_label": "1:16:50"
+    },
+    {
+      "index": 17,
+      "end_km": 17.0,
+      "split_s": 272.6,
+      "cumulative_s": 4882.9,
+      "split_label": "4:33",
+      "cumulative_label": "1:21:23"
+    },
+    {
+      "index": 18,
+      "end_km": 18.0,
+      "split_s": 272.6,
+      "cumulative_s": 5155.5,
+      "split_label": "4:33",
+      "cumulative_label": "1:25:55"
+    },
+    {
+      "index": 19,
+      "end_km": 19.0,
+      "split_s": 272.6,
+      "cumulative_s": 5428.1,
+      "split_label": "4:33",
+      "cumulative_label": "1:30:28"
+    },
+    {
+      "index": 20,
+      "end_km": 20.0,
+      "split_s": 272.6,
+      "cumulative_s": 5700.8,
+      "split_label": "4:33",
+      "cumulative_label": "1:35:01"
+    },
+    {
+      "index": 21,
+      "end_km": 21.0,
+      "split_s": 272.6,
+      "cumulative_s": 5973.4,
+      "split_label": "4:33",
+      "cumulative_label": "1:39:33"
+    },
+    {
+      "index": 22,
+      "end_km": 21.098,
+      "split_s": 26.6,
+      "cumulative_s": 6000.0,
+      "split_label": "0:27",
+      "cumulative_label": "1:40:00"
+    }
+  ],
+  "fueling_events": [
+    {
+      "elapsed_s": 1370.3,
+      "elapsed_label": "22:50",
+      "clock_time": "2026-11-15T08:52:50+02:00",
+      "distance_km": 4.6,
+      "terrain": "Descent",
+      "gels": 1,
+      "carbs_g": 22.0,
+      "fluid_ml": 150,
+      "sodium_mg": 75,
+      "message": "At km 4.6 [Approx. 22:50], consume 1 Isotonic Gel + 150ml Electrolytes (taken just after the climb)"
+    },
+    {
+      "elapsed_s": 2690.3,
+      "elapsed_label": "44:50",
+      "clock_time": "2026-11-15T09:14:50+02:00",
+      "distance_km": 9.47,
+      "terrain": "Flat",
+      "gels": 1,
+      "carbs_g": 22.0,
+      "fluid_ml": 100,
+      "sodium_mg": 50,
+      "message": "At km 9.5 [Approx. 44:50], consume 1 Isotonic Gel + 100ml Electrolytes"
+    },
+    {
+      "elapsed_s": 4010.3,
+      "elapsed_label": "1:06:50",
+      "clock_time": "2026-11-15T09:36:50+02:00",
+      "distance_km": 13.71,
+      "terrain": "Descent",
+      "gels": 1,
+      "carbs_g": 22.0,
+      "fluid_ml": 150,
+      "sodium_mg": 75,
+      "message": "At km 13.7 [Approx. 1:06:50], consume 1 Isotonic Gel + 150ml Electrolytes"
+    },
+    {
+      "elapsed_s": 5330.3,
+      "elapsed_label": "1:28:50",
+      "clock_time": "2026-11-15T09:58:50+02:00",
+      "distance_km": 18.64,
+      "terrain": "Flat",
+      "gels": 1,
+      "carbs_g": 22.0,
+      "fluid_ml": 150,
+      "sodium_mg": 75,
+      "message": "At km 18.6 [Approx. 1:28:50], consume 1 Isotonic Gel + 150ml Electrolytes"
+    }
+  ],
+  "nutrition": {
+    "carbs_per_hour_target": 60.0,
+    "carbs_total_g": 88.0,
+    "gels_total": 4,
+    "fluid_total_ml": 550,
+    "fluid_avg_l_hr": 0.33,
+    "sweat_loss_total_l": 1.522,
+    "sweat_rate_avg_l_hr": 0.913,
+    "est_body_mass_loss_pct": 1.35,
+    "sodium_total_mg": 275
+  },
+  "warnings": []
+}

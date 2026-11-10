@@ -1,0 +1,9 @@
+{
+  "sport": "run",
+  "weight_kg": 72,
+  "threshold_pace_sec_km": 270,
+  "max_hr": 190,
+  "threshold_hr": 172,
+  "target_carbs_per_hour": 60,
+  "sweat_rate_l_hr": 0.8
+}
