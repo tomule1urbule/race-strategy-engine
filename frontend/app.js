@@ -244,7 +244,7 @@ function render(result) {
     : [`Avg speed`, `${fmtNum(c.total_distance_km / (bp.predicted_finish_s / 3600), 1)}<small>km/h</small>`];
   const stats = [
     avg,
-    ["Feels like", `${fmtNum(bp.environment.apparent_temp_start_c)}–${fmtNum(bp.environment.apparent_temp_end_c)}<small>°C</small>`],
+    ["Feels like", `${feelsLike(bp.environment)}<small>°C</small>`],
     ["Gels", `${n.gels_total}`],
     ["Carbs", `${fmtNum(n.carbs_total_g)}<small>g</small>`],
     ["Fluid", `${fmtNum(n.fluid_total_ml / 1000, 2)}<small>L</small>`],
@@ -267,6 +267,12 @@ function render(result) {
   $("#results").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
+function feelsLike(env) {
+  const a = Math.round(env.apparent_temp_start_c);
+  const b = Math.round(env.apparent_temp_end_c);
+  return a === b ? `${a}` : `${a}→${b}`;
+}
+
 const TERRAIN_VAR = { Flat: "var(--flat)", Ascent: "var(--ascent)", Descent: "var(--descent)" };
 const TERRAIN_NAME = { Flat: "Flat", Ascent: "Climb", Descent: "Descent" };
 
@@ -274,14 +280,28 @@ function segCard(s, isRun) {
   const target = isRun
     ? `${esc(fmtPace(s.target_pace_sec_km))}<small>per km</small>`
     : `${s.target_power_watts} W<small>${fmtNum(s.target_speed_kmh, 1)} km/h</small>`;
-  const note = s.guidance.split(": ").slice(1).join(": ") || s.guidance;
+  const note = segNote(s, isRun);
   return `<article class="seg-card">
     <span class="seg-card__bar" style="background:${TERRAIN_VAR[s.terrain]}"></span>
     <div class="seg-card__meta"><b>${TERRAIN_NAME[s.terrain]}</b> · km ${fmtNum(s.start_km, 1)}–${fmtNum(s.end_km, 1)} · ${s.avg_grade_pct > 0 ? "+" : ""}${fmtNum(s.avg_grade_pct, 1)}% · from ${fmtDuration(s.est_start_s)}</div>
     <div class="seg-card__target">${target}</div>
     <div class="seg-card__hr">HR ${s.hr_target_low}–${s.hr_target_high} · <span class="cap">cap ${s.hr_cap}</span></div>
-    <p class="seg-card__note">${esc(note)}</p>
+    ${note ? `<p class="seg-card__note">${esc(note)}</p>` : ""}
   </article>`;
+}
+
+function segNote(s, isRun) {
+  if (s.terrain === "Ascent") {
+    return isRun
+      ? `Run by effort, not pace. If HR goes past ${s.hr_cap}, ease off: shorten your stride and hike steep pitches to save glycogen.`
+      : `Ride to power, not speed. Stay seated and spin a lower gear. If HR goes past ${s.hr_cap}, ease off.`;
+  }
+  if (s.terrain === "Descent") {
+    return isRun
+      ? "Let gravity work: quick, light cadence and no braking. Your HR should drop here."
+      : s.avg_grade_pct < -4 ? "Tuck, recover and spin lightly. Eat or drink before the descent, not on it." : "Keep light pressure on the pedals and recover.";
+  }
+  return "";
 }
 
 function fuelList(bp) {
