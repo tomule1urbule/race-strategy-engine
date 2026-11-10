@@ -19,7 +19,7 @@ import xml.etree.ElementTree as ET
 from collections.abc import Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import IO, Union, cast
+from typing import IO, Union
 
 import numpy as np
 import pandas as pd
@@ -155,7 +155,8 @@ class GPXAnalyzer:
         df["distance_m"] = np.cumsum(step[keep])
         if df["distance_m"].iloc[-1] < self.config.resample_step_m * 2:
             raise GPXParseError("Course is too short to analyse")
-        return cast(pd.DataFrame, df)
+        out: pd.DataFrame = df
+        return out
 
     # ---------------------------------------------------------------- profiling
     def build_profile(self, raw: pd.DataFrame) -> pd.DataFrame:
@@ -182,22 +183,20 @@ class GPXAnalyzer:
         grade = pd.Series(step_grade).rolling(window=window, center=True, min_periods=1).mean().to_numpy()
         heading = bearing_rad(lat[:-1], lon[:-1], lat[1:], lon[1:])
 
-        return cast(
-            pd.DataFrame,
-            pd.DataFrame(
-                {
-                    "distance_m": grid,
-                    "lat": lat,
-                    "lon": lon,
-                    "ele": ele,
-                    "ele_smooth": ele_smooth,
-                    # step quantities are attributed to the step's starting point; last row padded
-                    "step_m": np.append(dx, 0.0),
-                    "grade_pct": np.append(grade, grade[-1]),
-                    "heading_rad": np.append(heading, heading[-1]),
-                }
-            ),
+        profile: pd.DataFrame = pd.DataFrame(
+            {
+                "distance_m": grid,
+                "lat": lat,
+                "lon": lon,
+                "ele": ele,
+                "ele_smooth": ele_smooth,
+                # step quantities are attributed to the step's starting point; last row padded
+                "step_m": np.append(dx, 0.0),
+                "grade_pct": np.append(grade, grade[-1]),
+                "heading_rad": np.append(heading, heading[-1]),
+            }
         )
+        return profile
 
     # ------------------------------------------------------------- segmentation
     def classify_grade(self, grade_pct: float) -> TerrainType:
